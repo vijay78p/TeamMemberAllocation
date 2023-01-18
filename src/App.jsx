@@ -114,7 +114,7 @@ export default function App() {
   const handleEmployeeCardClick = (event) => {
     const transformedEmployees = employees.map((emp) => emp.id ===
       parseInt(event.currentTarget.id)
-      ? (emp.TeamName === selectedTeam) ? { ...emp, teamName: '' } : { ...emp, teamName: selectedTeam } : emp);
+      ? (emp?.teamName === selectedTeam) ? { ...emp, teamName: '' } : { ...emp, teamName: selectedTeam } : emp);
     setEmployees(transformedEmployees);
   };
   return (
@@ -133,6 +133,7 @@ export default function App() {
           handleEmployeeCardClick={handleEmployeeCardClick}
         />} >
         </Route>
+
         <Route path="/groupedTeamMembers" element={<GroupedTeamMembers
           employees={employees}
           selectedTeam={selectedTeam}

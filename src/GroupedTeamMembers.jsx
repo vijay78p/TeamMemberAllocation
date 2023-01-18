@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const GroupedTeamMembers = ({ employees, selectedTeam, setTeam }) => {
 
   const [groupedEmployees, setGroupedData] = useState(groupedTeamMembers());
+
+  console.log(selectedTeam)
   function groupedTeamMembers() {
     var teams = [];
 
@@ -17,32 +19,43 @@ const GroupedTeamMembers = ({ employees, selectedTeam, setTeam }) => {
     var teamCMembers = employees.filter((emp) => emp.teamName = 'TeamC');
     var teamC = { team: 'TeamC', members: teamCMembers, collapsed: selectedTeam === 'TeamC' ? false : true };
     teams.push(teamC);
+    return teams
+
   }
 
+  console.log(groupedEmployees)
+
   function handleTeamClick(event) {
-    var transformedGroupData = groupedEmployees.map((res) => {
-      res.team === event.currentTarget.id ? { ...res, collapsed: !res.collapsed } : res;
-    })
+    console.log(event?.currentTarget.id)
+    var transformedGroupData = groupedEmployees.map((res) =>
+      res?.team === event.currentTarget.id ? {
+        ...res, collapsed: !res
+          ?.collapsed
+      } : res
+    )
+    console.log(transformedGroupData)
     setGroupedData(transformedGroupData);
     setTeam(event.currentTarget.id);
   }
   return (
 
-    <main class="container">
+    <main className="container">
+
       {groupedEmployees.map((item) => {
+
         return (
-          <div key={item.team} className="card mt-2" style={{ cursor: "pointer" }}>
-            <h4 id={item.team} className="card-header text-secondary bg-white" onClick={handleTeamClick}>
-              Team Name : {item.team}
+          <div key={item?.team} className="card mt-2" style={{ cursor: "pointer" }}>
+            <h4 id={item?.team} className="card-header text-secondary bg-white" onClick={handleTeamClick}>
+              Team Name : {item?.team}
             </h4>
-            <div id={"colapse_" + item.team} className={item.collapsed === true ? 'collapsed' : ''}>
+            <div id={"colapse_" + item?.team} className={item?.collapsed === true ? 'collapse' : ''}>
               <hr />
-              {item.members.map((mem) => {
+              {item?.members.map((mem) => {
                 return (
                   <div className="mt-2">
                     <h5 className="card-title mt-2">
-                      <span className="text-dark">Full Name : {mem.fullName}</span>
-                      <p>Designation: {mem.designation}</p>
+                      <span className="text-dark">Full Name : {mem?.fullName}</span>
+                      <p>Designation: {mem?.designation}</p>
                     </h5>
                   </div>
                 )
